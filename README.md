@@ -107,6 +107,38 @@ python src/anonymize_text.py -i ./data -o ./anonymized --batch-size 64
 
 ### 3. Translating Reports
 
+#### Option A: Using DeepL API (Recommended for Quality)
+
+```bash
+# Translate German to English using DeepL
+python src/translate_jsonl_deepl.py \
+  --input-dir ./data \
+  --output-dir ./translated \
+  --api-key YOUR_DEEPL_API_KEY
+
+# Or set environment variable
+export DEEPL_API_KEY="your-api-key-here"
+python src/translate_jsonl_deepl.py -i ./data -o ./translated
+
+# Preserve original text
+python src/translate_jsonl_deepl.py \
+  -i ./data \
+  -o ./translated \
+  --api-key YOUR_KEY \
+  --preserve-original
+
+# Use different target language
+python src/translate_jsonl_deepl.py \
+  -i ./data \
+  -o ./translated \
+  --api-key YOUR_KEY \
+  --target-lang EN-GB  # British English
+```
+
+**Get your DeepL API key at:** https://www.deepl.com/pro-api
+
+#### Option B: Using Local Hugging Face Models
+
 ```bash
 # Translate German to English (local model)
 python src/translate_jsonl.py \
@@ -173,17 +205,23 @@ Then upload JSONL files or specify a local directory to compare different versio
 ```
 parquet_reader/
 ├── src/
-│   ├── read_parquet.py              # Main parquet processing
-│   ├── anonymize_text.py            # Text anonymization
-│   ├── translate_jsonl.py           # German-English translation
-│   ├── embed_reports.py             # Text embedding generation
-│   ├── cluster_embeddings.py        # Clustering & visualization
-│   └── streamlit_report_comparison.py  # Interactive UI
+│   ├── read_parquet.py                   # Main parquet processing
+│   ├── anonymize_text.py                 # Text anonymization (Flair NER)
+│   ├── translate_jsonl.py                # Translation (HuggingFace models)
+│   ├── translate_jsonl_deepl.py          # Translation (DeepL API)
+│   ├── embed_reports.py                  # Text embedding generation
+│   ├── cluster_embeddings.py             # Clustering & visualization
+│   └── streamlit_report_comparison.py    # Interactive UI
 ├── examples/
-│   └── minimal_example.py           # Minimal working example
-├── requirements.txt                 # Python dependencies
-├── README.md                        # This file
-└── LICENSE                          # License information
+│   ├── create_sample_data.py             # Generate sample input files
+│   ├── sample_data.parquet               # Sample parquet file
+│   ├── sample_data.jsonl                 # Sample JSONL file
+│   └── README.md                         # Examples documentation
+├── requirements.txt                      # Python dependencies
+├── pyproject.toml                        # Package configuration
+├── README.md                             # This file
+├── LICENSE                               # License information
+└── .gitignore                            # Git ignore rules
 ```
 
 ## Typical Workflow
@@ -195,8 +233,9 @@ python src/read_parquet.py data.parquet --format jsonl --output-dir ./step1
 # 2. Anonymize sensitive information
 python src/anonymize_text.py -i ./step1 -o ./step2 --preserve-original
 
-# 3. Translate to English (optional)
-python src/translate_jsonl.py -i ./step2 -o ./step3
+# 3. Translate to English (optional - using DeepL for best quality)
+python src/translate_jsonl_deepl.py -i ./step2 -o ./step3 --api-key YOUR_KEY
+# Or use local HuggingFace model: python src/translate_jsonl.py -i ./step2 -o ./step3
 
 # 4. Generate embeddings
 python src/embed_reports.py -i ./step3 -b 32

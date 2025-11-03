@@ -41,6 +41,7 @@ dependencies = [
     "tqdm>=4.65.0",
     "striprtf>=0.0.26",
     "requests>=2.31.0",
+    "deepl>=1.16.0",
 ]
 
 [project.optional-dependencies]
@@ -63,6 +64,7 @@ Issues = "https://github.com/yourusername/parquet_reader/issues"
 parquet-reader = "src.read_parquet:main"
 parquet-anonymize = "src.anonymize_text:main"
 parquet-translate = "src.translate_jsonl:main"
+parquet-translate-deepl = "src.translate_jsonl_deepl:main"
 parquet-embed = "src.embed_reports:main"
 parquet-cluster = "src.cluster_embeddings:main"
 

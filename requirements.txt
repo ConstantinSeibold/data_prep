@@ -25,5 +25,8 @@ striprtf>=0.0.26
 # HTTP requests (for HF Inference API)
 requests>=2.31.0
 
+# DeepL API for translation
+deepl>=1.16.0
+
 # Optional: accelerate for faster model loading
 accelerate>=0.20.0
