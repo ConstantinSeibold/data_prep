@@ -306,35 +306,3 @@ read_and_decode_parquet(
 ```
 
 See `examples/minimal_example.py` for a complete working example.
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Citation
-
-If you use this toolkit in your research, please cite:
-
-```bibtex
-@software{parquet_reader,
-  title={Parquet Reader \& Medical Report Processing Toolkit},
-  author={Your Name},
-  year={2025},
-  url={https://github.com/yourusername/parquet_reader}
-}
-```
-
-## Acknowledgments
-
-- Flair for NER capabilities
-- Hugging Face for translation models
-- SentenceTransformers for embedding models
-- The open-source community
-
-## Support
-
-For issues, questions, or suggestions, please open an issue on GitHub.
